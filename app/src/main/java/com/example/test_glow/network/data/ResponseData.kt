@@ -28,3 +28,18 @@ data class BrandItemData(
     val brandTitle: String,
     val imageUrl: String
 )
+
+// API_RECOMMEND 관련 DATA CLASS
+data class ResponseRecommendData(
+    val recommend1 : ArrayList<ProductItemData>,
+    val recommend2 : ArrayList<ProductItemData>,
+    val recommend3 : ArrayList<ProductItemData>
+)
+
+data class RecommendItemData(
+    val idProduct : Int,
+    val productTitle : String,
+    val ratingAvg : Double,
+    val reviewCount: String,
+    val imageUrl : String
+)
