@@ -66,6 +66,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideNullHostNameVerifier() : HostnameVerifier = HostnameVerifier { _, _ -> true}
+
+
+    @Provides
+    @Singleton
     fun provideSslSocketFactory(trustAllCerts:Array<TrustManager>): SSLSocketFactory {
         val sslContext = SSLContext.getInstance("SSL")
         sslContext.init(null, trustAllCerts, java.security.SecureRandom())
@@ -77,7 +82,6 @@ object NetworkModule {
     @Provides
     fun provideOkHttpClientForApi(bodyLog: HttpLoggingInterceptor,
                                   sslSocketFactory : SSLSocketFactory,
-                                  authenticator: Authenticator,
                                   trustAllCerts:Array<TrustManager>,
                                   nullHostNameVerifier: HostnameVerifier,
     ): OkHttpClient
@@ -85,7 +89,6 @@ object NetworkModule {
         .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)                                           // 연결 타임아웃 시간 설정
         .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)                                               // 쓰기 타임아웃 시간 설정
         .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)                                                 // 읽기 타임아웃 시간 설정
-        .authenticator(authenticator)                                                                // Refresh Token
 //        .addNetworkInterceptor(Interceptor { chain ->                                                // Add Header
 //            val requestBuilder = chain.request().newBuilder()
 //                .addHeader("Accept", "application/json")

@@ -1,12 +1,15 @@
 package com.example.test_glow.network.data
 
+import com.squareup.moshi.JsonClass
 
 
 // API_PRODUCTS 관련 DATA CLASS
+@JsonClass(generateAdapter = true)
 data class ResponseProductData(
-    var products : ArrayList<ProductItemData>
+    var products : List<ProductItemData>
 )
 
+@JsonClass(generateAdapter = true)
 data class ProductItemData(
     val idProduct: Int,
     val idBrand: Int,
@@ -23,6 +26,7 @@ data class ProductItemData(
     val brand: BrandItemData
 )
 
+@JsonClass(generateAdapter = true)
 data class BrandItemData(
     val idBrand: Int,
     val brandTitle: String,
@@ -30,12 +34,14 @@ data class BrandItemData(
 )
 
 // API_RECOMMEND 관련 DATA CLASS
+@JsonClass(generateAdapter = true)
 data class ResponseRecommendData(
-    val recommend1 : ArrayList<ProductItemData>,
-    val recommend2 : ArrayList<ProductItemData>,
-    val recommend3 : ArrayList<ProductItemData>
+    val recommend1 : List<RecommendItemData>,
+    val recommend2 : List<RecommendItemData>,
+    val recommend3 : List<RecommendItemData>
 )
 
+@JsonClass(generateAdapter = true)
 data class RecommendItemData(
     val idProduct : Int,
     val productTitle : String,

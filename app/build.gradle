@@ -67,6 +67,22 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"   // for moshi converter
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"             // Logging Interceptor
 
+    // Lifecycle
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_lifecycle"
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$version_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+
+    //  Moshi : JSON Parser
+    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$version_moshi"
+
+
     // Material Theme
     implementation "com.google.android.material:material:$version_material"
 
