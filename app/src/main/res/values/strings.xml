@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">test-glow</string>
+    <string name="review_text_format">(리뷰 %1$s)</string>
 </resources>

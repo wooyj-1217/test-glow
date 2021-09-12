@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
+import com.example.test_glow.R
 import com.example.test_glow.databinding.FragmentListBinding
 import com.example.test_glow.network.data.ResponseProductData
 import com.example.test_glow.network.data.ResponseRecommendData
 import com.example.test_glow.network.utility.Status
+import com.example.test_glow.view.adapter.ProductItemClickListener
+import com.example.test_glow.view.adapter.ProductListAdapter
 import com.example.test_glow.viewmodel.ListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -23,6 +27,7 @@ class ListFragment : Fragment() {
     private val viewModel : ListViewModel by viewModels()
 
     lateinit var recommendList : ResponseRecommendData
+    private lateinit var productListAdapter : ProductListAdapter
 
     private val TAG = javaClass.simpleName
 
@@ -42,7 +47,12 @@ class ListFragment : Fragment() {
     }
 
     private fun setRecyclerViewAdapter(){
-
+        productListAdapter = ProductListAdapter( ProductItemClickListener { data, view->
+            Timber.tag(TAG).d("$data")
+            val action = ListFragmentDirections.actionListFragmentToDetailFragment(data.imageUrl, data.productTitle)
+            findNavController().navigate(action)
+        }, this)
+        binding.rvList.adapter = productListAdapter
     }
 
     private fun observeViewModel(){
@@ -82,8 +92,8 @@ class ListFragment : Fragment() {
                     data.products[i].recommendListData = recommendList.recommend3
                 }
             }
+            productListAdapter.submitList(data.products)
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
