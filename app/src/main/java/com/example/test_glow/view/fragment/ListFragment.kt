@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.test_glow.R
 import com.example.test_glow.databinding.FragmentListBinding
@@ -59,7 +60,22 @@ class ListFragment : Fragment() {
         binding.rvList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                //TODO("infinite Scroll 작업 필요")
+
+                if(!binding.rvList.canScrollVertically(1)){
+                    //endless list 이벤트 >> page 3 이상은 갈 수 없도록 막아놨다
+                    if(viewModel.pageString.value.toInt() < 3){
+                        binding.constraintLoading.visibility =View.VISIBLE
+                        Timber.tag(TAG).d("${viewModel.pageString.value.toInt() + 1}")
+                        viewModel.pageString.value = (viewModel.pageString.value.toInt() + 1).toString()
+                    }
+                    else{
+                        binding.constraintLoading.visibility =View.GONE
+                    }
+                }
+                else{
+                    binding.constraintLoading.visibility =View.GONE
+                }
+
             }
         })
     }
@@ -102,22 +118,13 @@ class ListFragment : Fragment() {
                 }
             }
             productListAdapter.submitList(data.products)
+            binding.constraintLoading.visibility =View.GONE
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initEvent()
     }
 
-    private fun initEvent(){
-
-        //endless list 이벤트
-        if(viewModel.pageString.value.toInt() < 3){
-            Timber.tag(TAG).d("${viewModel.pageString.value.toInt() + 1}")
-            viewModel.pageString.value = (viewModel.pageString.value.toInt() + 1).toString()
-        }
-
-    }
 
 }

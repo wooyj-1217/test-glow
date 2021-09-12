@@ -27,6 +27,10 @@ class ListViewModel @Inject constructor(
     var pageString: MutableStateFlow<String> = MutableStateFlow(
         savedStateHandle.get("page")?: "1"
     )
+    //page, 검색어 정보
+    var loadingValue: MutableStateFlow<Boolean> = MutableStateFlow(
+        savedStateHandle.get("loading")?: false
+    )
 
     val productsList : LiveData<Resource<ResponseProductData>>
         get() = _res
