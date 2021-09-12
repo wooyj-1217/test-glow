@@ -23,7 +23,8 @@ data class ProductItemData(
     val rankChangeType: String,
     val reviewCount: String,
     val imageUrl: String,
-    val brand: BrandItemData
+    val brand: BrandItemData,
+    var recommendListData: List<RecommendItemData>?
 )
 
 @JsonClass(generateAdapter = true)

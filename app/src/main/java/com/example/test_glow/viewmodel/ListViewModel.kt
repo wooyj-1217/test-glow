@@ -28,14 +28,11 @@ class ListViewModel @Inject constructor(
         savedStateHandle.get("page")?: "1"
     )
 
-
     val productsList : LiveData<Resource<ResponseProductData>>
         get() = _res
     private val _res = pageString.flatMapLatest { page->
         productsListUseCase.execute(page)
     }.asLiveData()
-
-
 
     fun getRecommendList() = recommendListUseCase.execute()
 
