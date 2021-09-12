@@ -24,7 +24,7 @@ class ListViewModel @Inject constructor(
 ): AndroidViewModel(application) {
 
     //page, 검색어 정보
-    private val pageString: MutableStateFlow<String> = MutableStateFlow(
+    var pageString: MutableStateFlow<String> = MutableStateFlow(
         savedStateHandle.get("page")?: "1"
     )
 

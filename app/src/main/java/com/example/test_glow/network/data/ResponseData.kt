@@ -19,7 +19,7 @@ data class ProductItemData(
     val idBrand: Int,
     val productTitle: String,
     val volume : String,
-    val price: Int,
+    val price: Int? = 0,
     val productScore: Float,
     val ratingAvg: Double,
     val productRank: String,

@@ -1,13 +1,16 @@
 package com.example.test_glow.view.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.test_glow.R
 import com.example.test_glow.databinding.FragmentListBinding
 import com.example.test_glow.network.data.ResponseProductData
@@ -53,6 +56,12 @@ class ListFragment : Fragment() {
             findNavController().navigate(action)
         }, this)
         binding.rvList.adapter = productListAdapter
+        binding.rvList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                //TODO("infinite Scroll 작업 필요")
+            }
+        })
     }
 
     private fun observeViewModel(){
@@ -98,6 +107,17 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initEvent()
+    }
+
+    private fun initEvent(){
+
+        //endless list 이벤트
+        if(viewModel.pageString.value.toInt() < 3){
+            Timber.tag(TAG).d("${viewModel.pageString.value.toInt() + 1}")
+            viewModel.pageString.value = (viewModel.pageString.value.toInt() + 1).toString()
+        }
+
     }
 
 }
