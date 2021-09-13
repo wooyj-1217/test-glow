@@ -23,13 +23,8 @@ class ListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ): AndroidViewModel(application) {
 
-    //page, 검색어 정보
     var pageString: MutableStateFlow<String> = MutableStateFlow(
         savedStateHandle.get("page")?: "1"
-    )
-    //page, 검색어 정보
-    var loadingValue: MutableStateFlow<Boolean> = MutableStateFlow(
-        savedStateHandle.get("loading")?: false
     )
 
     val productsList : LiveData<Resource<ResponseProductData>>
